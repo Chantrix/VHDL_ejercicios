@@ -8,17 +8,21 @@ entity contador_4_bits is
 end entity;
 
 architecture arch of contador_4_bits is
+begin
+    process (clk, rst) is
+        variable q_test : unsigned(3 downto 0);
     begin
-        process (clk, rst) is
-            begin
-                if rst = '1' then q <= "0000";
-                elsif rising_edge(clk) then
-                    if en = '1' then
-                        if unsigned(q)= 9 then
-                            q <= "0000";
-                        else q <= std_logic_vector(unsigned(q)+1);
-                        end if;
-                    end if;
+        if rst = '1' then
+            q_test := "0000";
+        elsif rising_edge(clk) then
+            if en = '1' then
+                if q_test = 9 then
+                    q_test := "0000";
+                else
+                    q_test := q_test + 1;
                 end if;
-        end process;
+            end if;
+        end if;
+        q <= std_logic_vector(q_test);
+    end process;
 end architecture;

@@ -32,7 +32,7 @@ entity bp_contador_4_bits is
             wait for (PERIODO/4);
             en <= '1';
             rst <= '0';
-            wait for (PERIODO/4);
+            wait for (PERIODO/4 + PERIODO/2);
             for index in 0 to 10 loop
                 wait for PERIODO;
             end loop;

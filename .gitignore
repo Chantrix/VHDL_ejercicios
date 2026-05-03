@@ -1,0 +1,22 @@
+# --- SISTEMAS OPERATIVOS ---
+# Windows
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+.fuse_hidden
+.directory
+.Trash-*
+
+# --- ARCHIVOS DE IDE / EDITOR ---
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace

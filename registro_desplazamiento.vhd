@@ -29,8 +29,8 @@ architecture arch_reg8 of reg_8bits is
                         i(index + 1) := i(index);
                     end loop;
                     i(0) := d_in;
-                    d_out <= std_logic_vector(i) ;
                     end if;
+                    d_out <= std_logic_vector(i) ;
                         
         end process;
 end architecture;

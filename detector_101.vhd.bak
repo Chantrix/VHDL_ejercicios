@@ -89,11 +89,3 @@ architecture moore of detector_101 is
             end process;
             det <= '1' when (estado = s2 and x = '1') else '0';
     end architecture;
-
-configuration cfg_moore of bp_detector is
-	for bp_test
-		for uut : detector_101
-			use entity work.detector_101(moore);
-		end for;
-	end for;
-end configuration;

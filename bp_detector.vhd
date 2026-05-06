@@ -24,3 +24,19 @@ architecture bp_test of bp_detector is
         x <= '1' after 120 ns , '1' after 220 ns , '0' after 320 ns, '1' after 420 ns,
         '0' after 520 ns , '1' after 620 ns; 
     end architecture;
+
+configuration cfg_moore of bp_detector is
+	for bp_test
+		for uut : detector_101
+			use entity work.detector_101(moore);
+		end for;
+	end for;
+end configuration;
+
+configuration cfg_mealy of bp_detector is
+	for bp_test
+		for uut : detector_101
+			use entity work.detector_101(mealy);
+		end for;
+	end for;
+end configuration;

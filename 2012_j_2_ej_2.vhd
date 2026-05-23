@@ -20,14 +20,14 @@ architecture comp of comparador is
         process(a, b, sel) is
             begin
                 if sel = '0' then
-                    if unsigned(a) > unsigned(b) then x1 <= '1';x2 <= '0';x3 <= '0';
-                    elsif unsigned(a) < unsigned(b) then x1 <= '0';x2 <= '0';x3 <= '1';
-                    else x1 <= '0';x2 <= '1';x3 <= '0';
+                    if unsigned(a) > unsigned(b) then x3 <= '1';x2 <= '0';x1 <= '0';
+                    elsif unsigned(a) < unsigned(b) then x3 <= '0';x2 <= '0';x1 <= '1';
+                    else x3 <= '0';x2 <= '1';x1 <= '0';
                     end if;
                 else
-                    if signed(a) > signed(b) then x1 <= '1';x2 <= '0';x3 <= '0';
-                    elsif signed(a) < signed(b) then x1 <= '0';x2 <= '0';x3 <= '1';
-                    else x1 <= '0';x2 <= '1';x3 <= '0';
+                    if signed(a) > signed(b) then x3 <= '1';x2 <= '0';x1 <= '0';
+                    elsif signed(a) < signed(b) then x3 <= '0';x2 <= '0';x1 <= '1';
+                    else x3 <= '0';x2 <= '1';x1 <= '0';
                     end if;
                 end if;
             end process;

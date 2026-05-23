@@ -31,7 +31,7 @@ architecture bp_comp of bp_comp is
     signal a, b :  std_logic_vector(7 downto 0);
     signal sel :  std_logic ;
     signal num : integer := 0;
-    procedure verifica(s3 :in std_logic; s2 :in std_logic; s1 :in std_logic) is
+    procedure verifica(s3 :in std_logic; s2 :in std_logic; s1 :in std_logic;signal num : inout integer) is
         begin
             if not(x3 = s3 and x2 = s2 and x1 = s1) then
                 report "Error";
@@ -45,35 +45,35 @@ architecture bp_comp of bp_comp is
                 wait for tiempo;
                 a <= "11111111"; b <= "00000000"; sel<='1';
                 wait for tiempo;
-                verifica ('0','0','1');
+                verifica ('0','0','1',num);
                 wait for tiempo;
                 sel <='0';
                 wait for tiempo;
-                verifica ('1','0','0');
+                verifica ('1','0','0',num);
                 wait for tiempo;
                 a <= "00001110"; b <= "00001111"; sel<='1';
                 wait for tiempo;
-                verifica ('0','0','1');
+                verifica ('0','0','1',num);
                 wait for tiempo;
                 sel <='0';
                 wait for tiempo;
-                verifica ('0','0','1');
+                verifica ('0','0','1',num);
                 wait for tiempo;
                 a <= "01111111"; b <= "01111110"; sel<='1';
                 wait for tiempo;
-                verifica ('1','0','0');
+                verifica ('1','0','0',num);
                 wait for tiempo;
                 sel <='0';
                 wait for tiempo;
-                verifica ('1','0','0');
+                verifica ('1','0','0',num);
                 wait for tiempo;
                 a <= "00011110"; b <= "00011110"; sel<='1';
                 wait for tiempo;
-                verifica ('0','1','0');
+                verifica ('0','1','0',num);
                 wait for tiempo;
                 sel <='0';
                 wait for tiempo;
-                verifica ('0','1','0');
+                verifica ('0','1','0',num);
                 wait for tiempo;
                 report " Numero de Errores: " & integer'image(num);
                 wait;

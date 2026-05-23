@@ -95,5 +95,5 @@ begin
             estado_prox <= YY;
             temporizador <= 0;
         end case;
-    end tiempos;
+    end process tiempos;
 end arch ; -- arch

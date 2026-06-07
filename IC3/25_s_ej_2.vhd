@@ -34,33 +34,42 @@ architecture maquina of maquina is
     type estadoT is (INICIO, CINCO, DIEZ, CHICLE);
     signal estado : estadoT := INICIO;
     begin
-        process (reset, clk) is
+        estado_proximo : process (reset, clk) is
             begin
                 if reset = '1' then 
                     estado <= INICIO;
-                    abrir <= '0';
                 elsif rising_edge(clk) then
                     case estado is
                         when INICIO => 
-                        abrir <= '0';
                         if cinco = '1' then estado <= CINCO;
                         elsif diez = '1' then estado <= DIEZ;
                         end if;
                         when CINCO =>
-                        abrir <= '0';
                         if cinco = '1' then estado <= DIEZ;
                         elsif diez = '1' then estado <= CHICLE;
                         end if;
                         when DIEZ =>
-                        abrir <= '0';
                         if cinco = '1' then estado <= CHICLE;
                         end if;
                         when CHICLE =>
-                        abrir <= '1';
                         estado <= INICIO;
                         when others => 
                         estado <= INICIO;
                     end case;
                 end if;
             end process;
+            salidas : process (estado) is
+                begin
+                    case estado is
+                        
+                        when INICIO => 
+                        abrir <= '0';
+                        when CINCO =>
+                        abrir <= '0';
+                        when DIEZ =>
+                        abrir <= '0';
+                        when CHICLE =>
+                        abrir <= '1';
+                        end case;
+                    end process;
 end architecture;

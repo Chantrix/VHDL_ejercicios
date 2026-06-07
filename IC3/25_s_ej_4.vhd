@@ -53,7 +53,7 @@ architecture bp_numceros of bp_numCeros is
                     end if;
                         test := test +1;
                     end loop;
-                    report "numero de errores: " & numErr'image;
+                    report "numero de errores: " & integer'image(numErr);
                     wait;
                 end process;
 

@@ -31,25 +31,23 @@ architecture moore of cont_8_b is
     -- digito activo del mux (0..3)
     signal digito           : unsigned(1 downto 0) := "00";
 
-    --procedimiento que dado un digito devuelve la salida necesaria en display de 7 segmantos
-    procedure sieteSeg (
-        signal numero : in integer;
-        signal seg7 : out std_logic_vector(6 downto 0)
-    ) is
+    --funcion que dado un digito devuelve la salida necesaria en display de 7 segmentos
+    function sieteSeg (numero : integer) return std_logic_vector is
         begin
             case numero is
-                when 0 => seg7 <= "1111110";
-                when 1 => seg7 <= "0110000";
-                when 2 => seg7 <= "1101101";
-                when 3 => seg7 <= "1111001";
-                when 4 => seg7 <= "0110011";
-                when 5 => seg7 <= "1011011";
-                when 6 => seg7 <= "1011111";
-                when 7 => seg7 <= "1110000";
-                when 8 => seg7 <= "1111111";
-                when 9 => seg7 <= "1110011";
-                end case;
-    end procedure;
+                when 0 => return "1111110";
+                when 1 => return "0110000";
+                when 2 => return "1101101";
+                when 3 => return "1111001";
+                when 4 => return "0110011";
+                when 5 => return "1011011";
+                when 6 => return "1011111";
+                when 7 => return "1110000";
+                when 8 => return "1111111";
+                when 9 => return "1110011";
+                when others => return "0000001";
+            end case;
+    end function;
             
 
     begin
@@ -148,9 +146,9 @@ architecture moore of cont_8_b is
         mux_salida: process(digito, centenas, decenas, unidades) is
             begin
                 case digito is
-                    when "00" => display <= "1110"; sieteSeg(unidades,  segmentos);
-                    when "01" => display <= "1101"; sieteSeg(decenas,   segmentos);
-                    when "10" => display <= "1011"; sieteSeg(centenas,  segmentos);
+                    when "00" => display <= "1110"; segmentos <= sieteSeg(unidades);
+                    when "01" => display <= "1101"; segmentos <= sieteSeg(decenas);
+                    when "10" => display <= "1011"; segmentos <= sieteSeg(centenas);
                     when others => display <= "0111"; segmentos <= "0000000";
                 end case;
         end process;

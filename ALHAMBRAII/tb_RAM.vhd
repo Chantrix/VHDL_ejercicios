@@ -50,16 +50,16 @@ begin
         w_en <= '0';
 
         addr <= "0000"; wait until rising_edge(clk); wait for 1 ns;
-        assert data_out = "1010" report "ERROR lectura addr 0: esperado 1010, obtenido " & to_string(data_out) severity error;
+        assert data_out = "1010" report "ERROR lectura addr 0: esperado 1010, obtenido " & std_logic'image(data_out(3)) & std_logic'image(data_out(2)) & std_logic'image(data_out(1)) & std_logic'image(data_out(0)) severity error;
 
         addr <= "0001"; wait until rising_edge(clk); wait for 1 ns;
-        assert data_out = "0101" report "ERROR lectura addr 1: esperado 0101, obtenido " & to_string(data_out) severity error;
+        assert data_out = "0101" report "ERROR lectura addr 1: esperado 0101, obtenido " & std_logic'image(data_out(3)) & std_logic'image(data_out(2)) & std_logic'image(data_out(1)) & std_logic'image(data_out(0)) severity error;
 
         addr <= "0010"; wait until rising_edge(clk); wait for 1 ns;
-        assert data_out = "1111" report "ERROR lectura addr 2: esperado 1111, obtenido " & to_string(data_out) severity error;
+        assert data_out = "1111" report "ERROR lectura addr 2: esperado 1111, obtenido " & std_logic'image(data_out(3)) & std_logic'image(data_out(2)) & std_logic'image(data_out(1)) & std_logic'image(data_out(0)) severity error;
 
         addr <= "0011"; wait until rising_edge(clk); wait for 1 ns;
-        assert data_out = "0011" report "ERROR lectura addr 3: esperado 0011, obtenido " & to_string(data_out) severity error;
+        assert data_out = "0011" report "ERROR lectura addr 3: esperado 0011, obtenido " & std_logic'image(data_out(3)) & std_logic'image(data_out(2)) & std_logic'image(data_out(1)) & std_logic'image(data_out(0)) severity error;
 
         -- Sobreescritura
         w_en <= '1';
@@ -67,9 +67,9 @@ begin
 
         w_en <= '0';
         addr <= "0000"; wait until rising_edge(clk); wait for 1 ns;
-        assert data_out = "1100" report "ERROR sobreescritura addr 0: esperado 1100, obtenido " & to_string(data_out) severity error;
+        assert data_out = "1100" report "ERROR sobreescritura addr 0: esperado 1100, obtenido " & std_logic'image(data_out(3)) & std_logic'image(data_out(2)) & std_logic'image(data_out(1)) & std_logic'image(data_out(0)) severity error;
 
-        report "Testbench completado sin errores" severity note;
+        report "Testbench completado sin errores" severity failure;
         wait;
     end process;
 

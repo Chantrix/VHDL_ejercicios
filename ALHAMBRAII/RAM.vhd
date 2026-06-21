@@ -1,4 +1,4 @@
--- IMplementacion de una RAM basica 2D de 4x4
+-- IMplementacion de una RAM basica 2D de 16x4
 
 library IEEE;
 use IEEE.std_logic_1164.all;

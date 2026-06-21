@@ -29,9 +29,10 @@ architecture behavioral of RAM is
             begin
                 if rising_edge(clk) then
                     if w_en = '1' then
-                        mem(to_integer(unsigned(addr))) <= data_in;
-                    end if;
+                        mem(to_integer(unsigned(addr))) <= data_in ;
+                    else
                     data_out <= mem(to_integer(unsigned(addr)));
+                    end if;
                 end if;
         end process;
     end architecture;

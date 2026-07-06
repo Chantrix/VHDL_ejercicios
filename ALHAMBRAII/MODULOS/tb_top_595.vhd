@@ -1,0 +1,98 @@
+-- testbench para top_595
+-- verifica la cadena completa: BIN_a_BCD -> mux_digitos -> BCD_a_7seg -> fsm_595
+library IEEE;
+use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+
+entity tb_top_595 is
+end entity;
+
+architecture sim of tb_top_595 is
+
+    -- periodo de reloj 12 MHz
+    constant T_CLK : time := 83 ns;
+
+    -- señales del DUT
+    signal clk   : std_logic := '0';
+    signal rst   : std_logic := '1';
+    signal sclk  : std_logic;
+    signal mosi  : std_logic;
+    signal latch : std_logic;
+    signal hab   : std_logic_vector(3 downto 0);
+
+    -- componente bajo test
+    component top_595 is
+        generic( DIV_MAX : integer);
+        port(
+            clk   : in  std_logic;
+            rst   : in  std_logic;
+            sclk  : out std_logic;
+            mosi  : out std_logic;
+            latch : out std_logic;
+            hab   : out std_logic_vector(3 downto 0));
+    end component;
+
+begin
+
+    -- generador de reloj
+    clk <= not clk after T_CLK / 2;
+
+    -- instancia del DUT
+    U_DUT : top_595
+        generic map (
+            DIV_MAX => 5)
+        port map (
+            clk   => clk,
+            rst   => rst,
+            sclk  => sclk,
+            mosi  => mosi,
+            latch => latch,
+            hab   => hab);
+
+    -- estimulos
+    process is
+    begin
+        -- reset inicial
+        rst <= '1';
+        wait for 10 * T_CLK;
+        rst <= '0';
+
+        -- dejamos correr la simulacion el tiempo suficiente para ver
+        -- al menos 2 ciclos completos de los 4 digitos
+        -- cada bit: 2 ciclos de clk_div (1kHz) = 2ms
+        -- 8 bits por digito = 16ms por digito
+        -- 4 digitos = 64ms por vuelta completa
+        -- 2 vueltas = 128ms
+        -- clk_div se genera a partir de 12MHz con DIV_MAX=5999
+        -- en simulacion esperamos en ciclos de clk real
+        -- 128ms / 83ns ≈ 1_542_000 ciclos → simplificamos a 200_000 ciclos
+        wait for 200_000 * T_CLK;
+
+        -- fin de simulacion
+        report "Simulacion completada" severity note;
+        std.env.stop;
+    end process;
+
+    -- monitor: imprime cambios relevantes en consola
+    process (latch) is
+    begin
+        if rising_edge(latch) then
+            report "LATCH activo - hab=" & to_string(hab) &
+                   "  mosi_ultimo=" & std_logic'image(mosi)
+                severity note;
+        end if;
+    end process;
+
+    -- monitor de habilitacion de digito
+    process (hab) is
+    begin
+        case hab is
+            when "1110" => report "Digito 3 activo (unidades)"   severity note;
+            when "1101" => report "Digito 2 activo (decenas)"    severity note;
+            when "1011" => report "Digito 1 activo (centenas)"   severity note;
+            when "0111" => report "Digito 0 activo (miles=0)"    severity note;
+            when others => null;
+        end case;
+    end process;
+
+end architecture;
